@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ABCMoneyTransfer.Models.ExchangeRate>
+@{
+    ViewData["Title"] = "Exchange Rates";
+}
+
+<h2>Current Exchange Rates for @DateTime.Now.ToString("yyyy-MM-dd")</h2>
+
+<div class="table-responsive">
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Currency</th>
+            <th>Unit</th>
+            <th>Buy Rate</th>
+            <th>Sell Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var rate in Model)
+        {
+            <tr>
+                <td>@rate.CurrencyName (@rate.CurrencyCode)</td>
+                <td>@rate.Unit</td>
+                <td>@rate.BuyRate</td>
+                <td>@rate.SellRate</td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

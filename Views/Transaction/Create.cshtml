@@ -1,0 +1,111 @@
+﻿@model ABCMoneyTransfer.Models.TransactionDetail
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Transfer Money</h1>
+<hr />
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="row">
+        <fieldset class="border m-2 p-2 form-group">
+            <legend>Receiver Information</legend>
+            <div class="row">
+                <input type="hidden" asp-for="SenderId" />
+
+    <div class="col-md-4">
+                    <label asp-for="ReceiverFirstName" class="control-label required">First Name</label>
+                    <input asp-for="ReceiverFirstName" class="form-control" />
+                    <span asp-validation-for="ReceiverFirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label asp-for="ReceiverMiddleName" class="control-label">Middle Name</label>
+                    <input asp-for="ReceiverMiddleName" class="form-control" />
+                    <span asp-validation-for="ReceiverMiddleName" class="text-danger"></span>
+            </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="ReceiverLastName" class="control-label">Last Name</label>
+                    <input asp-for="ReceiverLastName" class="form-control" />
+                    <span asp-validation-for="ReceiverLastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label asp-for="ReceiverAddress" class="control-label">Address</label>
+                    <input asp-for="ReceiverAddress" class="form-control" />
+                    <span asp-validation-for="ReceiverAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="ReceiverCountry" class="control-label">Country</label>
+                    <input asp-for="ReceiverCountry" class="form-control" disabled readonly />
+                    <span asp-validation-for="ReceiverCountry" class="text-danger"></span>
+                </div>
+                </div>
+            </fieldset>
+
+        <fieldset class="border m-2 p-2 form-group">
+            <legend>Transcation Information</legend>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label asp-for="BankName" class="control-label">Bank Name</label>
+                    <input asp-for="BankName" class="form-control" />
+                    <span asp-validation-for="BankName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="AccountNumber" class="control-label">Account Number</label>
+                    <input asp-for="AccountNumber" class="form-control" />
+                    <span asp-validation-for="AccountNumber" class="text-danger"></span>
+                </div>
+              
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label asp-for="TransferAmountMYR" class="control-label">Transfer Amount (MYR)</label>
+                    <input asp-for="TransferAmountMYR" class="form-control" />
+                    <span asp-validation-for="TransferAmountMYR" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="ExchangeRate" class="control-label readonly">Exchange Rate</label>
+                    <input asp-for="ExchangeRate" class="form-control" disabled />
+                    <span asp-validation-for="ExchangeRate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="PayoutAmountNPR" class="control-label ">Payout Amount (NPR)</label>
+                    <input asp-for="PayoutAmountNPR" class="form-control readonly" disabled />
+                    <span asp-validation-for="PayoutAmountNPR" class="text-danger"></span>
+                </div>
+            </div>
+        </fieldset>
+            <div class="form-group d-flex justify-content-center gap-2">
+
+            <a asp-action="Index" class="btn btn-secondary">Back</a>                
+                <input type="submit" value="Transfer" class="btn btn-primary" />
+            </div>
+    </div>
+        </form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const transferAmountInput = document.getElementById('TransferAmountMYR');
+            const exchangeRateInput = document.getElementById('ExchangeRate');
+
+            const payoutAmountInput = document.getElementById('PayoutAmountNPR');
+
+            const exchangeRate = parseFloat(exchangeRateInput.value);
+
+            transferAmountInput.addEventListener('input', function () {
+                const transferAmountMYR = parseFloat(transferAmountInput.value) || 0;
+                const payoutAmountNPR = transferAmountMYR * exchangeRate;
+                payoutAmountInput.value = payoutAmountNPR.toFixed(2);
+            });
+        });
+    </script>
+}

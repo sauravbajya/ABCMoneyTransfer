@@ -1,5 +1,6 @@
 using ABCMoneyTransfer.Data;
 using ABCMoneyTransfer.Models;
+using ABCMoneyTransfer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,9 +12,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+// Register HttpClient and ExchangeRateService
+builder.Services.AddHttpClient<ExchangeRateService>();
 
 var app = builder.Build();
 
@@ -38,7 +42,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Transaction}/{action=Index}/{id?}");
 app.MapRazorPages();
 
 app.Run();
