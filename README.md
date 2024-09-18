@@ -2,13 +2,13 @@ Money Transfer System
 
 Project Overview
 
-This is a money transfer system built with ASP.NET Core, implementing key functionalities such as user authentication (via ASP.NET Identity), exchange rate management, and the ability to transfer money from Malaysia (MYR) to Nepal (NPR). The system allows users to send money to receivers in Nepal, providing live exchange rate calculations and a summary of transactions.
+This is a money transfer system built with ASP.NET Core, implementing key functionalities such as user authentication (via ASP.NET Identity), exchange rate management, and the ability to transfer money from Malaysia (MYR) to Nepal (NPR). The system allows users to send money of senders from Malaysia to receivers in Nepal, providing live exchange rate calculations and a summary of transactions.
 
 Features
 
-User Authentication: Users (senders) can sign up and log in using ASP.NET Identity. Authentication is required for all transactions except for viewing the exchange rate.
+User Authentication: Users can sign up and log in using ASP.NET Identity. Authentication is required for all transactions except for viewing the exchange rate.
 
-Money Transfer: Authenticated users can transfer money from Malaysia (MYR) to Nepal (NPR).
+Money Transfer: Authenticated users can transfer money for senders from Malaysia (MYR) to receivers in Nepal (NPR).
 
 Exchange Rate Management: Exchange rate is dynamically fetched and displayed during the money transfer process.
 
@@ -32,7 +32,7 @@ Project Setup
 
 1. Clone the repository:
 
-git clone
+git clone https://github.com/sauravbajya/ABCMoneyTransfer.git
 
 
 2. Open the project in Visual Studio.
@@ -47,6 +47,7 @@ git clone
 
 4. Run the migrations to set up the database:
 
+add-migration 'InitialMigraion'
 Update-Database
 
 
@@ -67,7 +68,7 @@ After registering, log in to access the money transfer features.
 
 Once logged in, navigate to the "Transfer Money" page.
 
-Fill in the receiver's information and the transfer amount.
+Fill in the sender's information, receiver's information and the transfer amount.
 
 The system will automatically calculate the exchange rate and display the equivalent amount in NPR.
 
