@@ -6,25 +6,60 @@
 
 <h1>Transfer Money</h1>
 <hr />
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<div class="row">
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <fieldset class="border m-2 p-2 form-group">
+            <legend>Sender Information</legend>
+            <div class="row">
+
+                <div class="col-md-4">
+                    <label asp-for="SenderFirstName" class="control-label required">Sender First Name</label>
+                    <input asp-for="SenderFirstName" class="form-control" />
+                    <span asp-validation-for="SenderFirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="SenderMiddleName" class="control-label">Sender Middle Name</label>
+                    <input asp-for="SenderMiddleName" class="form-control" />
+                    <span asp-validation-for="SenderMiddleName" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="SenderLastName" class="control-label">Sender Last Name</label>
+                    <input asp-for="SenderLastName" class="form-control" />
+                    <span asp-validation-for="SenderLastName" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label asp-for="SenderAddress" class="control-label">Sender Address</label>
+                    <input asp-for="SenderAddress" class="form-control" />
+                    <span asp-validation-for="SenderAddress" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="SenderCountry" class="control-label">Sender Country</label>
+                    <input asp-for="SenderCountry" class="form-control" disabled readonly />
+                    <span asp-validation-for="SenderCountry" class="text-danger"></span>
+                </div>
+            </div>
+        </fieldset>
+
         <fieldset class="border m-2 p-2 form-group">
             <legend>Receiver Information</legend>
             <div class="row">
-                <input type="hidden" asp-for="SenderId" />
 
-    <div class="col-md-4">
+                <div class="col-md-4">
                     <label asp-for="ReceiverFirstName" class="control-label required">First Name</label>
                     <input asp-for="ReceiverFirstName" class="form-control" />
                     <span asp-validation-for="ReceiverFirstName" class="text-danger"></span>
-            </div>
+                </div>
 
-            <div class="form-group col-md-4">
-                <label asp-for="ReceiverMiddleName" class="control-label">Middle Name</label>
+                <div class="form-group col-md-4">
+                    <label asp-for="ReceiverMiddleName" class="control-label">Middle Name</label>
                     <input asp-for="ReceiverMiddleName" class="form-control" />
                     <span asp-validation-for="ReceiverMiddleName" class="text-danger"></span>
-            </div>
+                </div>
                 <div class="form-group col-md-4">
                     <label asp-for="ReceiverLastName" class="control-label">Last Name</label>
                     <input asp-for="ReceiverLastName" class="form-control" />
@@ -43,8 +78,8 @@
                     <input asp-for="ReceiverCountry" class="form-control" disabled readonly />
                     <span asp-validation-for="ReceiverCountry" class="text-danger"></span>
                 </div>
-                </div>
-            </fieldset>
+            </div>
+        </fieldset>
 
         <fieldset class="border m-2 p-2 form-group">
             <legend>Transcation Information</legend>
@@ -59,7 +94,7 @@
                     <input asp-for="AccountNumber" class="form-control" />
                     <span asp-validation-for="AccountNumber" class="text-danger"></span>
                 </div>
-              
+
             </div>
             <div class="row">
                 <div class="form-group col-md-4">
@@ -79,17 +114,20 @@
                 </div>
             </div>
         </fieldset>
-            <div class="form-group d-flex justify-content-center gap-2">
 
-            <a asp-action="Index" class="btn btn-secondary">Back</a>                
-                <input type="submit" value="Transfer" class="btn btn-primary" />
-            </div>
+
+        <div class="form-group d-flex justify-content-center gap-2">
+            <a asp-action="Index" class="btn btn-secondary">Back</a>
+            <input type="submit" value="Transfer" class="btn btn-primary" />
+        </div>
     </div>
-        </form>
+</form>
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
 
     <script>

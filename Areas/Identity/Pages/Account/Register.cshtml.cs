@@ -112,11 +112,6 @@ namespace ABCMoneyTransfer.Areas.Identity.Pages.Account
             [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
-
-            // Custom fields
-            [Required]
-            [Display(Name = "Address")]
-            public string Address { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -135,7 +130,6 @@ namespace ABCMoneyTransfer.Areas.Identity.Pages.Account
                 user.FirstName = Input.FirstName;
                 user.MiddleName = Input.MiddleName;
                 user.LastName = Input.LastName;
-                user.Address = Input.Address;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

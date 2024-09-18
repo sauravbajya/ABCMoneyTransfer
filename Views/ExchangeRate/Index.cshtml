@@ -18,7 +18,7 @@
     <tbody>
         @foreach (var rate in Model)
         {
-            <tr>
+                <tr class="@(rate.IsActive? "table-active":"" )">
                 <td>@rate.CurrencyName (@rate.CurrencyCode)</td>
                 <td>@rate.Unit</td>
                 <td>@rate.BuyRate</td>

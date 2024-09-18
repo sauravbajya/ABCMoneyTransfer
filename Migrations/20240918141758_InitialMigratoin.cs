@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ABCMoneyTransfer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialMigratoin : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,10 +31,10 @@ namespace ABCMoneyTransfer.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -53,6 +53,33 @@ namespace ABCMoneyTransfer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SenderFirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SenderMiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    SenderLastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SenderAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SenderCountry = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ReceiverFirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ReceiverMiddleName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    ReceiverLastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ReceiverAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ReceiverCountry = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    BankName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    AccountNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TransferAmountMYR = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ExchangeRate = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    PayoutAmountNPR = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -218,6 +245,9 @@ namespace ABCMoneyTransfer.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

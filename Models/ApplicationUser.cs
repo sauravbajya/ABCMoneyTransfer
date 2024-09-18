@@ -16,12 +16,6 @@ namespace ABCMoneyTransfer.Models
         [MaxLength(50)]
         public string? LastName { get; set; }
 
-        [Required]
-        public string? Address { get; set; }
-
-        [Required]
-        public string Country { get; set; } = "Malaysia";
-
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         public DateTime? ModifiedOn { get; set; }

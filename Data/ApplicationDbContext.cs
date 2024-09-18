@@ -18,11 +18,6 @@ namespace ABCMoneyTransfer.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Fluent API configurations if necessary
-            modelBuilder.Entity<TransactionDetail>()
-                .HasOne(t => t.Sender)
-                .WithMany() // Assuming no navigation property on ApplicationUser
-                .HasForeignKey(t => t.SenderId);
         }
 
     }

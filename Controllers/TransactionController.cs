@@ -1,4 +1,5 @@
 ﻿using ABCMoneyTransfer.Data;
+using ABCMoneyTransfer.Enums;
 using ABCMoneyTransfer.Models;
 using ABCMoneyTransfer.Services;
 using ABCMoneyTransfer.ViewModel;
@@ -25,18 +26,21 @@ namespace ABCMoneyTransfer.Controllers
             _exchangeRateService = exchangeRateService;
         }
 
-        public async Task<IActionResult> Index(DateTime? startDate, DateTime? endDate)
+        public async Task<IActionResult> Index(TransactionFilterViewModel data)
         {
-            var transactions = _context.Transactions.Include(t => t.Sender).OrderByDescending(x => x.Date).AsQueryable();
+            var transactions = _context.Transactions.OrderByDescending(x => x.Date).AsQueryable();
+
+            var startDate = data.StartDate;
+            var endDate = data.EndDate;
 
             if (startDate.HasValue)
             {
-                transactions = transactions.Where(t => t.Date.Date >= startDate.Value);
+                transactions = transactions.Where(t => t.Date.Date >= startDate.Value.Date);
             }
 
             if (endDate.HasValue)
             {
-                transactions = transactions.Where(t => t.Date.Date <= endDate.Value);
+                transactions = transactions.Where(t => t.Date.Date <= endDate.Value.Date);
             }
 
             var model = new TransactionFilterViewModel
@@ -52,11 +56,10 @@ namespace ABCMoneyTransfer.Controllers
         public async Task<IActionResult> Create()
         {
             Guid senderId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var exchangeRate = await _exchangeRateService.GetExchangeRateAsync("MYR");
+            var exchangeRate = await _exchangeRateService.GetExchangeRateAsync(Currency.MYR.ToString());
 
             var model = new TransactionDetail
             {
-                SenderId = senderId.ToString(),
                 ExchangeRate = exchangeRate ?? 0
             };
 
@@ -70,7 +73,7 @@ namespace ABCMoneyTransfer.Controllers
             if (ModelState.IsValid)
             {
                 var sender = await _userManager.GetUserAsync(User);
-                var exchangeRate = await _exchangeRateService.GetExchangeRateAsync("MYR");
+                var exchangeRate = await _exchangeRateService.GetExchangeRateAsync(Currency.MYR.ToString());
 
                 if (sender == null)
                 {
@@ -83,9 +86,6 @@ namespace ABCMoneyTransfer.Controllers
                     return View(transaction);
                 }
 
-
-
-                transaction.SenderId = sender.Id;
 
                 transaction.ExchangeRate = (int)exchangeRate;
 
